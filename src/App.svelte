@@ -12,6 +12,7 @@ function gen_randlist_fromrange(range){
 function regenerate(){
     list_random = gen_randlist_fromrange(100)
 }
+let sleepTime = 1
 let list_random = gen_randlist_fromrange(100)
 console.log("The arrays of it is: ")
 console.log(list_random)
@@ -38,8 +39,27 @@ async function Bubble_sort(){
             }else{
 
             }
-            await sleep(0.1)
+            await sleep(sleepTime)
         }
+    }
+    console.log("finish")
+    on_sort_one = -1
+    on_sort_two = -1
+    button_disable = false
+}
+async function merge_sort(){
+    button_disable = true
+    for(let i=0; i<list_random.length;i++){
+        let item = list_random[i]
+        let y = i - 1;
+        while(y >= 0 && list_random[y] > item){
+            on_sort_one = y + 1
+            on_sort_two = i
+            list_random[y + 1] = list_random[y]
+            y = y - 1
+            await sleep(sleepTime)
+        }
+        list_random[y + 1] = item
     }
     console.log("finish")
     on_sort_one = -1
@@ -62,6 +82,8 @@ async function Bubble_sort(){
         <span>Sorting</span>
         <button on:click={regenerate} disabled="{button_disable}">rengenerate</button>
         <button on:click={()=> Bubble_sort()} disabled="{button_disable}">Bubble Sort</button>
+        <button on:click={()=> merge_sort()} disabled="{button_disable}">merge Sort</button>
+        <input type="number" name="delay" id="" bind:value={sleepTime}>
     </div>
 </main>
 
